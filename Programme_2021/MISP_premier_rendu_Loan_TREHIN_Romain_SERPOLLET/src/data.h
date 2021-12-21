@@ -69,7 +69,7 @@ const structure_instruction table_structure[26] = {{.nom = "ADD",	.emplacement_o
 												{.nom = "ADDI",		.emplacement_operandes = {'N','1','0','I','F'},			.code = {'0','0','1','0','0','0'}},
 												{.nom = "AND",		.emplacement_operandes = {'S','1','2','0','Z','N','F'},	.code = {'1','0','0','1','0','0'}},
 												{.nom = "BEQ",		.emplacement_operandes = {'N','0','1','I','F'},			.code = {'0','0','0','1','0','0'}},
-												{.nom = "BGZT",		.emplacement_operandes = {'N','0','Z','I','F'},			.code = {'0','0','0','1','1','1'}},
+												{.nom = "BGTZ",		.emplacement_operandes = {'N','0','Z','I','F'},			.code = {'0','0','0','1','1','1'}},
 												{.nom = "BLEZ",		.emplacement_operandes = {'N','0','Z','I','F'},			.code = {'0','0','0','1','1','0'}},
 												{.nom = "BNE",		.emplacement_operandes = {'N','0','Z','I','F'},			.code = {'0','0','0','1','0','1'}},
 												{.nom = "DIV",		.emplacement_operandes = {'S','0','1','Z','Z','N','F'},	.code = {'0','1','1','0','1','0'}},
