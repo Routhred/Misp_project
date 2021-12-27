@@ -4,7 +4,9 @@
 #include "struct.h"
 
 #define MAX 200
+//permet de traduire la ligne nb dans le fichier source et de l'afficher
 void traduireLigne(char source[],char dest[],int nb);
+//permet de traduire tout le fichier source ligne par ligne et de mettre le resultat dans le fichier dest
 void traduireFichier(char source[],char dest[],int mode);
 /*************************************************************************************************************
  * 											Slit:
