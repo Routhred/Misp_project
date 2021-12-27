@@ -2,8 +2,9 @@
 
 
 char GBR[32][32];
+
 void init_registre(){
-    GBR[0] = "00000000000000000000000000000000";
+    strcpy(GBR[0],"00000000000000000000000000000000");
 
 }
 void ecrireRegistre(int registre, char value[]){

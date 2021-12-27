@@ -2,12 +2,13 @@
 #define __FONCTION_H__
 
 #include "struct.h"
+#include "utile.h"
 
 #define MAX 200
 //permet de traduire la ligne nb dans le fichier source et de l'afficher
 void traduireLigne(char source[],char dest[],int nb);
 //permet de traduire tout le fichier source ligne par ligne et de mettre le resultat dans le fichier dest
-void traduireFichier(char source[],char dest[],int mode);
+void traduireFichier(char source[],char dest[],int mode,char memoire[MAX_PRG][33]);
 /*************************************************************************************************************
  * 											Slit:
  * 	Permet de découper la ligne passée en parametre, on utilise les delimitateurs " ,\n#()"
@@ -28,11 +29,7 @@ int findInstruction(instruction *in);
 **************************************************************************************************************/
 void trier_instruction(instruction *in);
 //Fonction qui sert a afficher les 5 premiers élements d'une instruction passée en parametre
-void afficher_instruction(instruction *in,int nb);
-void decToBin(char tableau[],int taille);
+
 void structToTab(instruction *in);
-void binToHex(char bin[],char hex[]);
 void registre_mnemo(char in[],char out[]);
-void complementADeux(char tableau[],int taille);
-void enleverPremierChar(char tableau[],int taille);
 #endif

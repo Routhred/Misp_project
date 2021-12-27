@@ -1,7 +1,7 @@
 #ifndef __STRUCT_H__
 #define __STRUCT_H__
 
-
+#define MAX_PRG 1000
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

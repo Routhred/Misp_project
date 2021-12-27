@@ -1,5 +1,5 @@
 #include "memory.h"
-char memoire [3000][32]; 
+char memoire [3000][33]; 
 //********************************************************************************
 //  Ici sera définie la mémoire et seule les fonctions de ce module pourront modifier et accéder a la memoire
 //  On devra avoir les fonctions suivantes:
