@@ -1,6 +1,8 @@
 #include "Fonction.h"
 #include "memory.h"
 #include "registre.h"
+#include "utile.h"
+#include "instruction.h"
 
 
 
@@ -17,7 +19,7 @@ int adresse = 10;
 int main(int argc,char * argv[]){
 
     printf("===================================\nDebut programme\n===================================");
-    
+    init_registre();
     if (argc == 3){
         char * source = strcat(strcpy(buffer1,path_test),argv[1]);
         char* dest = strcat(strcpy(buffer,path_hex),argv[2]);
@@ -32,7 +34,12 @@ int main(int argc,char * argv[]){
         printf("\nEcrivez le chemins du fichier source en lancement du programme ou de bons arguments\n");
     }
 
-    affiche_programme_binaire(programme);
+    //affiche_programme_binaire(programme);
+    ecrireRegistre(4, valeur_test);
+    ecrireRegistre(0, valeur_test);
+    ecrireRegistre(5, valeur_test);
+    add(3,5,4);
+    inc(32);
     
 
     return 0;

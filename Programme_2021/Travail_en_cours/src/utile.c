@@ -109,3 +109,32 @@ void affiche_programme_binaire(char programme[MAX_PRG][33]){
     //printf("Fin affichage programme\n");
     
 }
+//somme de 2 tableaux de 32 bits
+void somme(char tab1[],char tab2[],char result[]){
+	char carry = '0';
+	for(int i = 31;i>=0;i--){
+		if( (tab1[i] == '1') && (tab2[i] == '1') && (carry == '1') ){
+			result[i] = '1';
+			carry = '1';
+		}else if( (tab1[i] == '1') && (tab2[i] == '1') && (carry == '0') ){
+			result[i] = '0';
+			carry = '1';
+		}else if( ((tab1[i] == '1') ^ (tab2[i] == '1')) && (carry == '1') ){
+			result[i] = '0';
+			carry = '1';
+		}else if( ((tab1[i] == '1') ^ (tab2[i] == '1')) && (carry == '0') ){
+			result[i] = '1';
+			carry = '0';
+		
+		}else if( (tab1[i] == '0') && (tab2[i] == '0') && (carry == '1') ){
+			result[i] = '1';
+			carry = '0';
+		}else{
+			result[i] = '0';
+			carry = '0';
+		}
+
+
+
+	}
+}

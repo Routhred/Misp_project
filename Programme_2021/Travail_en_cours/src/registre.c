@@ -1,10 +1,11 @@
 #include "registre.h"
 
 
-char GBR[32][32];
+char GBR[33][33];
 
 void init_registre(){
     strcpy(GBR[0],"00000000000000000000000000000000");
+    strcpy(GBR[32],"00000000000000000000000000000000");
 
 }
 void ecrireRegistre(int registre, char value[]){
@@ -14,6 +15,11 @@ void ecrireRegistre(int registre, char value[]){
     }else{
         printf("Erreur, registre protégé\n");
     }
+}
+
+void lireRegistre(int registre, char value[]){
+    strcpy(value, GBR[registre]);
+
 }
 int verifRegistre(int registre){
     int result = 1;
@@ -26,4 +32,18 @@ int verifRegistre(int registre){
     return result;
 
 
+}
+void afficherRegistres(){
+    printf("==========================================\nAffichage des registres\n");
+    for(int i = 0;i<33;i++){
+        printf("%s\n",GBR[i]);
+    }
+    printf("==========================================\n");
+}
+void inc(int registre){
+    char value[33];
+    char un[]="00000000000000000000000000000001";
+    lireRegistre(registre, value);
+    somme(un,value,value);
+    ecrireRegistre(registre,value);
 }

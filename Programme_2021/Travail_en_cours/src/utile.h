@@ -14,7 +14,7 @@ void complementADeux(char tableau[],int taille);
 void enleverPremierChar(char tableau[],int taille);
 void binToHex(char bin[],char hex[]);
 void affiche_programme_binaire(char  programme[MAX_PRG][33]);
-
+void somme(char tab1[],char tab2[],char result[]);
 
 
 #endif
