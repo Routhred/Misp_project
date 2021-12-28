@@ -10,6 +10,7 @@ char * path_test = "tests/";
 char * path_hex = "hexified/";
 //declaration des tableaux contenant le programme
 instruction programme_in[MAX_PRG];
+char code [MAX_PRG][100];
 //tableau temporaires
 char buffer[100];
 char buffer1 [100];
@@ -35,22 +36,31 @@ int main(int argc,char * argv[]){
         char * dest = strcat(strcpy(buffer,path_hex),argv[2]);
         printf("\n\nMode fichier\n\n===================================\n");
         //traduction du fichier source
-        traduireFichier(source,dest,0,programme_in);
+        traduireFichier(source,dest,0,programme_in,code);
     //si on a 4 arguments alors on utilise le mode pas a pas
     }else if((argc == 4)&&!(strcmp("-pas",argv[3]))){
         char * source = strcat(strcpy(buffer1,path_test),argv[1]);
         char * dest = strcat(strcpy(buffer,path_hex),argv[2]);
         printf("===================================\n\nMode pas a pas\n\n===================================\n");
-        traduireFichier(source,dest,1,programme_in);
+        traduireFichier(source,dest,1,programme_in,code);
     //sinon on indique une erreur
     }else{
         printf("\nEcrivez le chemins du fichier source en lancement du programme ou de bons arguments\n");
     }
     
     //afficherProgrammeInstruction(programme_in);
+    printf("   PC      Registre modifié     Nouvelle valeur registre   adresse memoire modifiée   nouvelle valeur memoire\n");
     while(programme_in[i].binaire[0]!='Z'){
+        lireRegistre(32,buffer);
+        binToHex(buffer,buffer1);
+        printf("%s      ",buffer1);
         faireInstruction(programme_in[i]);
+        inc(32);
+        inc(32);
+        inc(32);
+        inc(32);
         i++;
+        printf("\n");
     }
     
 

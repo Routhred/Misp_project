@@ -1,5 +1,6 @@
 #include "instruction.h"
 #include "registre.h"
+#define espace "                       "
 
 void add(int dest,int first,int second){
         //printf("\nadd\n");
@@ -20,7 +21,7 @@ void add(int dest,int first,int second){
     //ecriture du tableau temporaire dans le registre de destination
     ecrireRegistre(dest,value_dest);
     binToHex(value_dest,hexa);
-    printf("Registre modifié: %d, valeur: %s\n",dest,hexa);
+    printf("%d%s%s",dest,espace,hexa);
 
 }
 void addi(int dest,int first,char immediate[]){
@@ -37,7 +38,7 @@ void addi(int dest,int first,char immediate[]){
         //printf("Valeur du registre second %d : %s\n",dest,value_dest);
     ecrireRegistre(dest,value_dest);
     binToHex(value_dest,hexa);
-    printf("Registre modifié: %d, valeur: %s\n",dest,hexa);
+    printf("%d%s%s",dest,espace,hexa);
 }
 void faireInstruction(instruction in){
     switch(in.numero){

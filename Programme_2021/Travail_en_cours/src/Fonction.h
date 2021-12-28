@@ -7,7 +7,7 @@
 #define MAX 200
 
 //permet de traduire tout le fichier source ligne par ligne et de mettre le resultat dans le fichier dest
-void traduireFichier(char source[],char dest[],int mode,instruction programme[MAX_PRG]);
+void traduireFichier(char source[],char dest[],int mode,instruction programme[MAX_PRG],char code[MAX_PRG][100]);
 /*************************************************************************************************************
  * 											Split:
  * 	Permet de découper la ligne passée en parametre, on utilise les delimitateurs " ,\n#()"
