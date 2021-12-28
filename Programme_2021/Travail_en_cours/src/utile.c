@@ -6,7 +6,6 @@
 
 
 
-//Fonction qui sert a afficher les nb premiers élements d'une instruction passée en parametre
 void afficher_instruction(instruction *in,int nb){
   int i = 0;
   printf("\nInstruction: ");
@@ -15,10 +14,7 @@ void afficher_instruction(instruction *in,int nb){
   }
   printf("\n");
 }
-/*************************************************************************************************************
-*						Decimal to binaire:
-*	on prend un tableau en entrée avec une taille de retour voulu
-**************************************************************************************************************/
+
 void decToBin(char tableau[],int taille){
 	int negatif = 0;
 
@@ -48,12 +44,6 @@ void decToBin(char tableau[],int taille){
 	}
 
 }
-/*************************************************************************************************************
-*						complementADeux
-*	Prend un tableau de char en parametre et la taille du tableau de retour
-* Modifie le tableau d'entree en mettant l'opposé de la valeur du tableau (binaire) pour avoir l'inverse en
-*complement a deux
-**************************************************************************************************************/
 void complementADeux(char tableau[],int taille){
 	int i;
 	int carry = 1;
@@ -74,7 +64,6 @@ void complementADeux(char tableau[],int taille){
 		}
 	}
 }
-// enleve le premier caractere d'un tableau de taille taille
 void enleverPremierChar(char tableau[],int taille){
 	int i = 0;
 	for(i;i<taille;i++){
@@ -82,8 +71,6 @@ void enleverPremierChar(char tableau[],int taille){
 	}
 	tableau[i]='\0';
 }
-
-//Traduit le tableau bin de 32 bits en hexadécimal et le met dans le tableau hex
 void binToHex(char bin[],char hex[]){
 	int i = 0;
 	int value;
@@ -99,19 +86,19 @@ void binToHex(char bin[],char hex[]){
 	hex[8] = '\0';
 
 }
-//affiche le programme en binaire
-void affiche_programme_binaire(char programme[MAX_PRG][33]){
-    int i = 0;
-    while(programme[i][0]!='Z'){
-        printf("__%s__\n",programme[i]);
-        i++;
-    }
-    //printf("Fin affichage programme\n");
-    
+void afficherProgrammeInstruction(instruction programme[MAX_PRG]){
+	int i = 0;
+	while(programme[i].binaire[0]!='Z'){
+		afficher_instruction(&programme[i],4);
+		i++;
+	}
+
+
+
 }
-//somme de 2 tableaux de 32 bits
 void somme(char tab1[],char tab2[],char result[]){
 	char carry = '0';
+	//printf("somme: %s + %s = %s",tab1,tab2,result);
 	for(int i = 31;i>=0;i--){
 		if( (tab1[i] == '1') && (tab2[i] == '1') && (carry == '1') ){
 			result[i] = '1';
@@ -133,7 +120,7 @@ void somme(char tab1[],char tab2[],char result[]){
 			result[i] = '0';
 			carry = '0';
 		}
-
+	result[32] = '\0';
 
 
 	}

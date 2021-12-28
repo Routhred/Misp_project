@@ -2,46 +2,8 @@
 #include "data.h"
 //definition des constantes
 const char * delimiter = " ,$()\n\r\t";
-void traduireLigne(char source[],char dest[],int nb){
-	FILE * fichier_source;
-	FILE * fichier_dest;
-	char ligne[100];
-	instruction in;
-	int i = 0;
-	//ouverture des fichiers en mode lecture et ecriture (pour ne pas modifier le fichier source)
-	fichier_source = fopen(source,"r");
-	fichier_dest = fopen(dest,"w");
-	//Si l'ouverture du fichier source renvoie NULL alors on affiche une problème
-	if (fichier_source == NULL){
-		perror("Probleme ouverture fichier");
-		exit(1);
-	}
-
-	while((!feof(fichier_source))&&(i<=nb)){
-		fgets(ligne,MAX,fichier_source);
-		i++;
-
-	}
-	if(split(ligne,&in)){
-
-			//On recupere le numero de ligne correspondant au code de l'instruction dans les tables de correspondance
-			in.numero = findInstruction(&in);
-			//on met les operandes de l'instruction dans le bon ordre
-			//on traduit l'instruction en binaire
-			trier_instruction(&in);
-			//on regroupe toute l'instruction dans un tableau de 32 bits
-			structToTab(&in);
-			//on traduit le tableau en binaire
-			binToHex(in.binaire,in.hexa);
-			//on ecrit le tableau en hexa dans le fichier dest
-			printf("ligne %d contient: %s%s et vaut: %s\n",i,in.mots[0],in.mots[1],in.hexa);
-			fputs(in.hexa,fichier_dest);
-			fputs("\n",fichier_dest);
-		}
-
-}
 //traduit tout le fichier source et le stock dans le fichier dest
-void traduireFichier(char source[],char dest[],int mode,char memoire[MAX_PRG][33]){
+void traduireFichier(char source[],char dest[],int mode,instruction programme [MAX_PRG]){
 	//declaration des variables
 	FILE * fichier_source;
 	FILE * fichier_dest;
@@ -76,8 +38,8 @@ void traduireFichier(char source[],char dest[],int mode,char memoire[MAX_PRG][33
 			//afficher_instruction(&in,4);
 			//on traduit le tableau en binaire
 			binToHex(in.binaire,in.hexa);
-			//on copie le binaire dans la memoire programme
-			strcpy(memoire[pc], in.binaire);
+			//on copie l'instruction dans le tableau programme instruction
+			programme[pc] = in;
 			//on ecrit le tableau en hexa dans le fichier dest
 			fputs(in.hexa,fichier_dest);
 			fputs("\n",fichier_dest);
@@ -91,49 +53,46 @@ void traduireFichier(char source[],char dest[],int mode,char memoire[MAX_PRG][33
 		
 		
 	}
-	//on ferme les fichiers et on marque l'arret du programme
-	strcpy(memoire[pc],"Z00000000000000000000000000000000");
-	
+	//on met un caractere de fin dans les mémoires programme
+	programme[pc].binaire[0] = 'Z';
+	//on ferme les fichiers
 	fclose(fichier_source);
 	fclose(fichier_dest);
 }
-/*************************************************************************************************************
- * 											Slit:
- * 	Permet de découper la ligne passée en parametre, on utilise les delimiter
- *
- * **************************************************************************************************************/
 int split(char ligne[], instruction *in){
+	//creation des variables
 	char flag;
 	int result = 0;
 	char cpy_ligne[100];
 	char * strtoken;
 	int compteur = 0;
 	int i = 0;
+
+	//sauvegarde de la ligne 
 	strcpy(cpy_ligne,ligne);
+	//utilisation de strtok
 	strtoken = strtok(cpy_ligne,delimiter);
+	//tant que notre token n'est pas null et qu'on a pas atteint un commentaire
 	while((strtoken != NULL)&&(strtoken[0]!='#')){
 		flag = 'a';
 		result = 1;
 		i = 0;
+		//sauvegarde du token dans notre instruction
 		while(flag != NULL){
 			flag = strtoken[i];
 			in->mots[compteur][i] = flag;
 			i++;
 		}
-	
+		//on passe au token suivant
 		strtoken = strtok ( NULL, delimiter);
 		
 		compteur ++;
 
 	}
+	//maj du nombre d'operandes de l'instruction
 	in->operandes = compteur;
 	return result;
 }
-/*************************************************************************************************************
- * 											findInstruction:
- * 	Permet de savoir a quelle ligne des tables de correspondance est l'instruction que l'on passe en parametre
- *
- * **************************************************************************************************************/
 int findInstruction(instruction *in){
 	int compteur = 0;
 	while(strcmp((in->mots[0]),(table_type[compteur].nom))){
@@ -141,12 +100,6 @@ int findInstruction(instruction *in){
 	}
 	return compteur;
 }
-/*************************************************************************************************************
-*						Fonction de trie des instruction:
-*	lorsque l'on prend une instruction depuis le fichier, les operandes ne sont pas dans le même ordre que ce que
-*	le misp va comprendre, on doit donc remettre les opérandes dans le bon ordre.
-*	On utilise une table de correspondance se trouvant dans data.h: table_structure
-**************************************************************************************************************/
 void trier_instruction(instruction *in){
 	char ordre[11];
 	char zero[6] = {'0','0','0','0','0','\0'};
@@ -214,12 +167,6 @@ void trier_instruction(instruction *in){
 		 }
      in->mots[i++][0]="\0";
 }
-
-/*************************************************************************************************************
-*						instruction to table
-*	on prend une instruction en entrée et on ressort un tableau binaire de 32bits en concatenant les differents
-*	mots binaires de l'instruction
-**************************************************************************************************************/
 void structToTab(instruction *in){
 	int i = 0;
 	int j = 0;
@@ -238,8 +185,6 @@ void structToTab(instruction *in){
 	}
 	in->binaire[32] = '\0';
 }
-
-//Renvoie la valeur decimale d'un registre
 void registre_mnemo(char in[],char out[]){
 	if((in[0]>96)&&(in[0]<123)){
 		int i = 0;
