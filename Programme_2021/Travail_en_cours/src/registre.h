@@ -1,7 +1,7 @@
 #ifndef __REGISTRE_H__
 #define __REGISTRE_H__
 #include "struct.h"
-
+#include "utile.h"
 #define MAX 200
 //initalise les registres
 void init_registre();
@@ -13,6 +13,8 @@ int verifRegistre(int registre);
 void afficherRegistres();
 //incremente un registre passé en parametre
 void inc(int registre);
+//lit ce qu'il y a dans un registre
+void lireRegistre(int registre, char value[]);
 
 
 

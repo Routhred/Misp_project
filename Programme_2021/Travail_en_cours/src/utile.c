@@ -14,7 +14,6 @@ void afficher_instruction(instruction *in,int nb){
   }
   printf("\n");
 }
-
 void decToBin(char tableau[],int taille){
 	int negatif = 0;
 
@@ -124,4 +123,30 @@ void somme(char tab1[],char tab2[],char result[]){
 
 
 	}
+}
+int binToInt(char tab[]){
+	size_t taille = strlen(tab);
+	int i = taille-1;
+	int puissance = 0;
+	int result = 0;
+	for(i;i>=0;i--){
+		result = result + ((int)tab[i]-48)*pow(2,puissance);
+		//printf("puissance: %d, result: %d\n",puissance,result);
+		puissance ++;
+	}
+	return result;
+}
+void tabTo32bits(char tab[],char tab2[]){
+	size_t taille = strlen(tab2);
+	int i = 32;
+	for(i;i>=0;i--){
+		if(i>=taille){
+			tab[i] = tab2[taille-(32-i)];
+		}else{
+			tab[i] = '0';
+		}
+		tab[33] = '\0';
+		
+	}
+	//printf("\ntableau 32 bits: %s,taill:%d\n",tab,taille);
 }

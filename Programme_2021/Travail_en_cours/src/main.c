@@ -13,6 +13,9 @@ instruction programme_in[MAX_PRG];
 //tableau temporaires
 char buffer[100];
 char buffer1 [100];
+//variable temporaire
+int decimal;
+int i = 0;
 //valeurs de test
 char valeur_test[] = "00001111000011110000111100001111";
 int adresse = 10;
@@ -30,7 +33,7 @@ int main(int argc,char * argv[]){
         //creation des fichiers sources et dest
         char * source = strcat(strcpy(buffer1,path_test),argv[1]);
         char * dest = strcat(strcpy(buffer,path_hex),argv[2]);
-        printf("\n\nMode fichier\n\n===================================");
+        printf("\n\nMode fichier\n\n===================================\n");
         //traduction du fichier source
         traduireFichier(source,dest,0,programme_in);
     //si on a 4 arguments alors on utilise le mode pas a pas
@@ -44,7 +47,11 @@ int main(int argc,char * argv[]){
         printf("\nEcrivez le chemins du fichier source en lancement du programme ou de bons arguments\n");
     }
     
-    afficherProgrammeInstruction(programme_in);
+    //afficherProgrammeInstruction(programme_in);
+    while(programme_in[i].binaire[0]!='Z'){
+        faireInstruction(programme_in[i]);
+        i++;
+    }
     
 
     return 0;

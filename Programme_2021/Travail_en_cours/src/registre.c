@@ -11,7 +11,7 @@ void init_registre(){
 void ecrireRegistre(int registre, char value[]){
     if(verifRegistre(registre)){
         strcpy(GBR[registre], value);
-        printf("\nRegistre: %d <= Valeur : __%s__\n", registre, GBR[registre]);
+            //printf("\nRegistre: %d <= Valeur : __%s__\n", registre, GBR[registre]);
     }else{
         printf("Erreur, registre protégé\n");
     }
