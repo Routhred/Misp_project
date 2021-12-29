@@ -150,3 +150,39 @@ void tabTo32bits(char tab[],char tab2[]){
 	}
 	//printf("\ntableau 32 bits: %s,taill:%d\n",tab,taille);
 }
+void bitwiseAnd(char dest[],char tab[],char tab2[]){
+	size_t taille = strlen(tab);
+	for(int i = 0;i<taille;i++){
+		if((tab[i] == '1') && (tab2[i] == '1')){
+			dest[i] = '1';
+		}else{
+			dest[i] = '0';
+		}
+	}
+	dest[taille] = '\0';
+	
+}
+void bitwiseOr(char dest[],char tab[],char tab2[]){
+	size_t taille = strlen(tab);
+	for(int i = 0;i<taille;i++){
+		if((tab[i] == '1') || (tab2[i] == '1')){
+			dest[i] = '1';
+		}else{
+			dest[i] = '0';
+		}
+	}
+	dest[taille] = '\0';
+	
+}
+void bitwiseXor(char dest[],char tab[],char tab2[]){
+	size_t taille = strlen(tab);
+	for(int i = 0;i<taille;i++){
+		if(((tab[i] == '1') && (tab2[i] == '0')) || ((tab[i] == '0') && (tab2[i] == '1'))){
+			dest[i] = '1';
+		}else{
+			dest[i] = '0';
+		}
+	}
+	dest[taille] = '\0';
+	
+}

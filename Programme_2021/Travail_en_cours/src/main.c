@@ -47,21 +47,28 @@ int main(int argc,char * argv[]){
     }else{
         printf("\nEcrivez le chemins du fichier source en lancement du programme ou de bons arguments\n");
     }
-    
+    printf("\n===================================\n");
     //afficherProgrammeInstruction(programme_in);
-    printf("   PC      Registre modifié     Nouvelle valeur registre   adresse memoire modifiée   nouvelle valeur memoire\n");
+    printf("colonne 1 : PC\ncolonne 2 : Registre modifié\ncolonne 3 : Nouvelle valeur registre\ncolonne 4 : adresse memoire modifiée\ncolonne 5 : nouvelle valeur memoire\ncolonne 6 : instruction en cours\n");
+    printf("\n===================================\n");
     while(programme_in[i].binaire[0]!='Z'){
         lireRegistre(32,buffer);
         binToHex(buffer,buffer1);
-        printf("%s      ",buffer1);
+        printf("%s\t",buffer1);
         faireInstruction(programme_in[i]);
-        inc(32);
-        inc(32);
-        inc(32);
-        inc(32);
+        printf("%s",code[i]);
+        if(programme_in[i+1].binaire[0]!='Z'){
+            inc(32);
+            inc(32);
+            inc(32);
+            inc(32);
+        }
+        
+        printf("                                                                                            \n");
         i++;
-        printf("\n");
     }
+    afficherRegistres();
+    afficherMemoire(0,40);
     
 
     return 0;

@@ -1,5 +1,6 @@
 #include "Fonction.h"
 #include "data.h"
+#include "memory.h"
 //definition des constantes
 const char * delimiter = " ,$()\n\r\t";
 //traduit tout le fichier source et le stock dans le fichier dest
@@ -28,12 +29,14 @@ void traduireFichier(char source[],char dest[],int mode,instruction programme [M
 		//sinon on passe a la ligne suivante
 		if(split(ligne,&in)){
 			strcpy(code[pc],ligne);
+				//printf("ligne:%s\n",ligne);
 			//printf("\n===================================\n");
 			//On recupere le numero de ligne correspondant au code de l'instruction dans les tables de correspondance
 			in.numero = findInstruction(&in);
 			//on met les operandes de l'instruction dans le bon ordre
 			//on traduit l'instruction en binaire
 			trier_instruction(&in);
+			//afficher_instruction(&in,4);
 			//on regroupe toute l'instruction dans un tableau de 32 bits
 			structToTab(&in);
 			//afficher_instruction(&in,4);
@@ -44,8 +47,10 @@ void traduireFichier(char source[],char dest[],int mode,instruction programme [M
 			//on ecrit le tableau en hexa dans le fichier dest
 			fputs(in.hexa,fichier_dest);
 			fputs("\n",fichier_dest);
+			printf("\n%d	%s	%s",pc,in.hexa,code[pc]);
+			ecrireMemoire(in.binaire,4*pc);
 			pc ++;
-			//printf("Hexa : %s",in.hexa);
+				//printf("Binaire : %s\n",in.binaire);
 		}
 		if(mode){
 			printf("\n//attendre appuis sur touche entree\n");

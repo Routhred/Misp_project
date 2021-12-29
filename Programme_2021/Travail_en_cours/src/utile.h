@@ -30,9 +30,11 @@ void binToHex(char bin[],char hex[]);
 void afficherProgrammeInstruction(instruction programme[MAX_PRG]);
 //somme de 2 tableaux de 32 bits
 void somme(char tab1[],char tab2[],char result[]);
-//traduire un tableau de taille bits en decimal
+//traduire un tableau de bits en decimal
 int binToInt(char tab[]);
 //transforme un tableau en un tableau de 32 bits en rajoutant des 0 devant
 void tabTo32bits(char tab[],char tab2[]);
-
+void bitwiseAnd(char dest[],char tab[],char tab2[]);
+void bitwiseOr(char dest[],char tab[],char tab2[]);
+void bitwiseXor(char dest[],char tab[],char tab2[]);
 #endif
