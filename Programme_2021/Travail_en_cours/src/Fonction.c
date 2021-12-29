@@ -4,7 +4,7 @@
 //definition des constantes
 const char * delimiter = " ,$()\n\r\t";
 //traduit tout le fichier source et le stock dans le fichier dest
-void traduireFichier(char source[],char dest[],int mode,instruction programme [MAX_PRG],char code[MAX_PRG][100]){
+int traduireFichier(char source[],char dest[],int mode,instruction programme [MAX_PRG],char code[MAX_PRG][100]){
 	//declaration des variables
 	FILE * fichier_source;
 	FILE * fichier_dest;
@@ -29,6 +29,8 @@ void traduireFichier(char source[],char dest[],int mode,instruction programme [M
 		//sinon on passe a la ligne suivante
 		if(split(ligne,&in)){
 			strcpy(code[pc],ligne);
+			//on specifie que l'instruction est active
+			in.actif = 1;
 				//printf("ligne:%s\n",ligne);
 			//printf("\n===================================\n");
 			//On recupere le numero de ligne correspondant au code de l'instruction dans les tables de correspondance
@@ -64,6 +66,7 @@ void traduireFichier(char source[],char dest[],int mode,instruction programme [M
 	//on ferme les fichiers
 	fclose(fichier_source);
 	fclose(fichier_dest);
+	return 4*pc;
 }
 int split(char ligne[], instruction *in){
 	//creation des variables

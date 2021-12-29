@@ -5,6 +5,7 @@
 
 
 #include "struct.h"
+#include <math.h>
 
 
 //Fonction qui sert a afficher les nb premiers élements d'une instruction passée en parametre
@@ -37,4 +38,5 @@ void tabTo32bits(char tab[],char tab2[]);
 void bitwiseAnd(char dest[],char tab[],char tab2[]);
 void bitwiseOr(char dest[],char tab[],char tab2[]);
 void bitwiseXor(char dest[],char tab[],char tab2[]);
+void intToBin(int nb,char tab[33]);
 #endif

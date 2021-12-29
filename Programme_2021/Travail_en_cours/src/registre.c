@@ -25,8 +25,8 @@ void lireRegistre(int registre, char value[]){
 }
 int verifRegistre(int registre){
     int result = 1;
-    int registre_protege[] = {0,1,26,27,2,30};
-    for(int i = 0;i<6;i++){
+    int registre_protege[] = {0,26,27,30};
+    for(int i = 0;i<4;i++){
         if (registre == registre_protege[i]){
             result = 0;
         }
@@ -38,9 +38,9 @@ int verifRegistre(int registre){
 void afficherRegistres(){
     printf("==========================================\nAffichage des registres\n");
     for(int i = 0;i<8;i++){
-        printf(" [%s] %d\t[%s] %d\t[%s] %d\t[%s] %d\n",mnemo[i],binToInt(GBR[i]),mnemo[i+8],binToInt(GBR[i+8]),mnemo[i+16],binToInt(GBR[i+16]),mnemo[i+24],binToInt(GBR[i+24]));
+        printf(" [%d][%s] %x\t\t\t\t[%d][%s] %x\t\t\t\t[%d][%s] %x\t\t\t\t[%d][%s] %x\n",i,mnemo[i],binToInt(GBR[i]),i+8,mnemo[i+8],binToInt(GBR[i+8]),i+16,mnemo[i+16],binToInt(GBR[i+16]),i+24,mnemo[i+24],binToInt(GBR[i+24]));
     }
-    printf("\n\n [%s] %d\t[%s] %d\t[%s] %d\n",mnemo[32],binToInt(GBR[32]),mnemo[33],binToInt(GBR[33]),mnemo[34],binToInt(GBR[34]));
+    printf("\n\n [%d][%s] %x\t\t\t\t[%d][%s] %x\t\t\t\t[%d][%s] %x\n",32,mnemo[32],binToInt(GBR[32]),33,mnemo[33],binToInt(GBR[33]),34,mnemo[34],binToInt(GBR[34]));
     printf("==========================================\n");
 }
 void inc(int registre){

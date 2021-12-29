@@ -1,5 +1,6 @@
 
 #include "utile.h"
+#include <math.h>
 
 
 
@@ -24,7 +25,7 @@ void decToBin(char tableau[],int taille){
 	}
 	int temp = atoi(tableau);
 	int i = 0;
-	char temp_tab[taille+1];
+	char temp_tab[34];
 	for(i;i<taille;i++){
 		if(temp>0){
 			temp_tab[i] = (temp%2)+'0';
@@ -143,7 +144,11 @@ void tabTo32bits(char tab[],char tab2[]){
 		if(i>=taille){
 			tab[i] = tab2[taille-(32-i)];
 		}else{
-			tab[i] = '0';
+			if(tab2[0] == '1'){
+				tab[i] = '1';
+			}else{
+				tab[i] = '0';
+			}
 		}
 		tab[33] = '\0';
 		
@@ -185,4 +190,29 @@ void bitwiseXor(char dest[],char tab[],char tab2[]){
 	}
 	dest[taille] = '\0';
 	
+}
+void intToBin(int nb,char tab[33]){
+int negatif = 0;
+
+	if(nb<0){
+		negatif = 1;
+	}
+	int i = 0;
+	char temp_tab[34];
+	for(i;i<32;i++){
+		if(nb>0){
+			temp_tab[i] = (nb%2)+'0';
+			nb/=2;
+		}else{
+			temp_tab[i] = 0 +'0';
+		}
+	}
+	int j = 0; i = 0;
+	for (i ,j = 31; i<32;i++,j--){
+		tab[i] = temp_tab[j];
+	}
+	tab[i] = '\0';
+	if (negatif){
+		complementADeux(tab,32);
+	}
 }

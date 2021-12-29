@@ -1,6 +1,6 @@
 
 all : Fonction.o main.o registre.o memory.o utile.o instruction.o
-	gcc Fonction.o main.o registre.o memory.o utile.o instruction.o -o prog -Wall
+	gcc Fonction.o main.o registre.o memory.o utile.o instruction.o -o prog -Wall -lm
 
 Fonction.o : Fonction.c Fonction.h data.h struct.h utile.h
 	gcc -c Fonction.c -o Fonction.o -Wall

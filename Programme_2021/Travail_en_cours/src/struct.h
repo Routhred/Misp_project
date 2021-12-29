@@ -33,6 +33,7 @@ typedef struct{
 	int numero;
 	char binaire[33];
 	char hexa[9];
+	int actif;
 }instruction;
 
 
