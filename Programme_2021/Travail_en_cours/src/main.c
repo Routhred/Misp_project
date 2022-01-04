@@ -1,9 +1,13 @@
-#include "Fonction.h"
+#include "traduction.h"
 #include "memory.h"
 #include "registre.h"
 #include "utile.h"
 #include "instruction.h"
 
+//arguments: 
+//	argv[0] = nom du programme
+//	argv[1] = nom du premier fichier
+//	argv[2] = nom du fichier de destination de la traduction
 
 //chemins des fichiers source et dest
 char * path_test = "tests/";
@@ -20,9 +24,14 @@ int pc = 0;
 int id = 0;
 int decimal;
 int fin = 0;
+//variable mode console
+char ligne [100];
+instruction instruction_console;
+int s;
+//mode d'execution
+int mode = 0;
 //il sera interdit d'ecrire en dessous de la memoire de base, ca sera la memoire deidee a l'alocation du programme
 int memoire_base;
-
 
 int main(int argc,char * argv[]){
 
@@ -33,55 +42,97 @@ int main(int argc,char * argv[]){
     //on met le resultat dans le fichier de destination 
     //on remplit les tableaux programme
     if (argc == 3){
+	    mode = 0;
         //creation des fichiers sources et dest
         char * source = strcat(strcpy(buffer1,path_test),argv[1]);
         char * dest = strcat(strcpy(buffer,path_hex),argv[2]);
         printf("\n\nMode fichier\n\n===================================\n");
         //traduction du fichier source
-        memoire_base = traduireFichier(source,dest,0,programme_in,code);
+        memoire_base = traduireFichier(source,dest,programme_in,code);
     //si on a 4 arguments alors on utilise le mode pas a pas
     }else if((argc == 4)&&!(strcmp("-pas",argv[3]))){
-        char * source = strcat(strcpy(buffer1,path_test),argv[1]);
+	//on set le mode pas a pas
+        mode = 1;
+	//creation des pointeurs
+	char * source = strcat(strcpy(buffer1,path_test),argv[1]);
         char * dest = strcat(strcpy(buffer,path_hex),argv[2]);
-        printf("===================================\n\nMode pas a pas\n\n===================================\n");
-        memoire_base = traduireFichier(source,dest,1,programme_in,code);
+	printf("\n\nMode pas a pas\n\n===================================\n");
+	//traduction du fichier
+	memoire_base = traduireFichier(source,dest,programme_in,code);
+    //sinon on indique une erreur
+    }else if(argc == 1){
+        mode = 2;
+	printf("\n\nMode console\n\n===================================\n");
+	printf("\"exit\" pour quitter le mode console\n");
     //sinon on indique une erreur
     }else{
         printf("\nEcrivez le chemins du fichier source en lancement du programme ou de bons arguments\n");
     }
-    printf("\n===================================\n");
-    //afficherProgrammeInstruction(programme_in);
-    printf("colonne 1 : PC\ncolonne 2 : Registre modifié\ncolonne 3 : Nouvelle valeur registre\ncolonne 4 : adresse memoire modifiée\ncolonne 5 : nouvelle valeur memoire\ncolonne 6 : instruction en cours\n");
-    printf("\n===================================\n");
+    
     //tant que l'instruction courante est active
-    while((pc<memoire_base)&&(!fin)){
-        //on lite la valeur du programme compteur
-        lireRegistre(32,temp_pc);
-        binToHex(temp_pc,buffer);
-        printf("%s\t",buffer);
-        //on calcul la valeur du pc en fonction du registre pc
-        pc = binToInt(temp_pc);
-        id = pc/4;
-        //si l'instruction designee par le prochain pc est active alor on incrémente le registre pc
-        if(pc<memoire_base){
-            inc(32);
-            inc(32);
-            inc(32);
-            inc(32);
-            //printf("PC = %d = %s\t",pc,temp_pc);
-            //on effectue l'instruction courante
-            faireInstruction(programme_in[id]);
-            printf("%s",code[id]);
-        }else{
-            //sinon c'est la fin du programme, on sort du while
-            printf("Fin du programme");
-            fin = 1;
-        }
-        printf("                                                                                            \n");
+    if(mode != 2){
+	    printf("\n===================================\n");
+	    //afficherProgrammeInstruction(programme_in);
+	    printf("colonne 1 : PC\ncolonne 2 : Registre modifié\ncolonne 3 : Nouvelle valeur registre\ncolonne 4 : adresse memoire modifiée\ncolonne 5 : nouvelle valeur memoire\ncolonne 6 : instruction en cours\n");
+	    printf("\n===================================\n");
+	    while((pc<memoire_base)&&(!fin)){
+		//on lit la valeur du programme compteur
+		lireRegistre(32,temp_pc);
+		//on traduit le pc en hexa pour l'affichage
+		binToHex(temp_pc,buffer);
+		printf("%s\t",buffer);
+		//on calcul la valeur du pc en fonction du registre pc
+		pc = binToInt(temp_pc);
+		id = pc/4;
+		//si l'instruction designee par le prochain pc est active alor on incrémente le registre pc
+		if(pc<memoire_base){
+		    inc(32);
+		    inc(32);
+		    inc(32);
+		    inc(32);
+		    //printf("PC = %d = %s\t",pc,temp_pc);
+		    //on effectue l'instruction courante
+		    faireInstruction(programme_in[id]);
+		    printf("%s",code[id]);
+		}else{
+		    //sinon c'est la fin du programme, on sort du while
+		    printf("Fin du programme");
+		    fin = 1;
+		}
+		printf("                                                                                            \n");
+		//si le mode est le mode pas a pas
+		if(mode == 1){
+			//on attend que l'utilisateur tappe <return>
+			s = getchar();
+		}
+		
+	    }
+	    //on affiche les registres
+		afficherRegistres();
+	        afficherMemoire(0,50);
+    }else{
+	    //tant qu'on a pas eu exit dans la console
+	    while(!fin){
+		//on recupere la ligne
+		printf(">");
+		fgets(ligne,100,stdin);
+		//on test si l'utilisateur a entr� exit
+		if(testExit(ligne)){
+			//si non on traduit la ligne
+			traduireLigne(ligne,programme_in);
+			//on effectue l'instruction
+			faireInstruction(programme_in[0]);
+			//on affiche les registres
+			afficherRegistres();
+		}else{
+			return 0;
+		}
+		}
     }
-    afficherRegistres();
-    //afficherMemoire(0,40);
+    
+
     
 
     return 0;
 }
+

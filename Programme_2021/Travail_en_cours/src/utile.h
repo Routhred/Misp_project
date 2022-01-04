@@ -39,4 +39,6 @@ void bitwiseAnd(char dest[],char tab[],char tab2[]);
 void bitwiseOr(char dest[],char tab[],char tab2[]);
 void bitwiseXor(char dest[],char tab[],char tab2[]);
 void intToBin(int nb,char tab[33]);
+int testExit(char ligne[100]);
+void lowerToUpper(char ligne[100]);
 #endif

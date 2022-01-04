@@ -1,13 +1,44 @@
-#include "Fonction.h"
+#include "traduction.h"
 #include "data.h"
 #include "memory.h"
 //definition des constantes
 const char * delimiter = " ,$()\n\r\t";
+void traduireLigne(char ligne[100],instruction programme[MAX_PRG]){
+	char temp[100];
+	strcpy(temp,ligne);
+	instruction in;
+	if(split(ligne,&in)){
+			lowerToUpper(in.mots[0]);
+			//On recupere le numero de ligne correspondant au code de l'instruction dans les tables de correspondance
+			in.numero = findInstruction(&in);
+			//on met les operandes de l'instruction dans le bon ordre
+			//on traduit l'instruction en binaire
+			trier_instruction(&in);
+			//afficher_instruction(&in,5);
+			//on regroupe toute l'instruction dans un tableau de 32 bits
+			structToTab(&in);
+			//afficher_instruction(&in,4);
+			//on traduit le tableau en binaire
+			binToHex(in.binaire,in.hexa);
+			programme[0] = in;
+			//printf("binaire = %s,hexa = %s",in.binaire,in.hexa);
+			//on copie l'instruction dans le tableau programme instruction
+			//on ecrit le tableau en hexa dans le fichier dest
+			printf("\n %s	%s",in.hexa,ligne);
+			//printf("Binaire : %s\n",in.binaire);
+		}
+	
+}
+
+
+
+
 //traduit tout le fichier source et le stock dans le fichier dest
-int traduireFichier(char source[],char dest[],int mode,instruction programme [MAX_PRG],char code[MAX_PRG][100]){
+int traduireFichier(char source[],char dest[],instruction programme [MAX_PRG],char code[MAX_PRG][100]){
 	//declaration des variables
 	FILE * fichier_source;
 	FILE * fichier_dest;
+	//declaration de variables locales
 	char ligne[100];
 	char temp;
 	instruction in;
@@ -31,7 +62,8 @@ int traduireFichier(char source[],char dest[],int mode,instruction programme [MA
 			strcpy(code[pc],ligne);
 			//on specifie que l'instruction est active
 			in.actif = 1;
-				//printf("ligne:%s\n",ligne);
+			lowerToUpper(in.mots[0]);
+			//printf("ligne:%s\n",ligne);
 			//printf("\n===================================\n");
 			//On recupere le numero de ligne correspondant au code de l'instruction dans les tables de correspondance
 			in.numero = findInstruction(&in);
@@ -54,15 +86,10 @@ int traduireFichier(char source[],char dest[],int mode,instruction programme [MA
 			pc ++;
 				//printf("Binaire : %s\n",in.binaire);
 		}
-		if(mode){
-			printf("\n//attendre appuis sur touche entree\n");
-			//scanf("%c",&temp);
-		}
 		
 		
 	}
-	//on met un caractere de fin dans les mémoires programme
-	programme[pc].binaire[0] = 'Z';
+
 	//on ferme les fichiers
 	fclose(fichier_source);
 	fclose(fichier_dest);
@@ -139,7 +166,6 @@ void trier_instruction(instruction *in){
 				break;
 			case 'I':
 				strcpy(temp.mots[i],in->mots[table_type[numero].operandes]);
-				//printf("Immediate: %s\n",in->mots[table_type[numero].operandes]);
 				decToBin(temp.mots[i],16);
 				break;
 			case 'O':

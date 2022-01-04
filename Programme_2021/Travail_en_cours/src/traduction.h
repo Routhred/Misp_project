@@ -7,7 +7,7 @@
 #define MAX 200
 
 //permet de traduire tout le fichier source ligne par ligne et de mettre le resultat dans le fichier dest
-int traduireFichier(char source[],char dest[],int mode,instruction programme[MAX_PRG],char code[MAX_PRG][100]);
+int traduireFichier(char source[],char dest[],instruction programme[MAX_PRG],char code[MAX_PRG][100]);
 /*************************************************************************************************************
  * 											Split:
  * 	Permet de découper la ligne passée en parametre, on utilise les delimitateurs " ,\n#()"
@@ -36,4 +36,5 @@ void trier_instruction(instruction *in);
 void structToTab(instruction *in);
 //renvoie la valeur decimale d'un registre
 void registre_mnemo(char in[],char out[]);
+void traduireLigne(char ligne[100],instruction programme[MAX_PRG]);
 #endif

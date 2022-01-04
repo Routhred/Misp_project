@@ -12,4 +12,9 @@ void bgtz(int first, char offset[]);
 void blez(int first, char offset[]);
 void bne(int first, int second, char offset[]);
 void divid(int first, int second);
+void jump(char first[32]);
+void jr(int first);
+void sw(int rs,char offset[17],int base);
+
+
 void faireInstruction(instruction in);

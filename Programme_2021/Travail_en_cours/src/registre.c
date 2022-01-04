@@ -36,12 +36,12 @@ int verifRegistre(int registre){
 
 }
 void afficherRegistres(){
-    printf("==========================================\nAffichage des registres\n");
+    printf("\n==========================================\nAffichage des registres\n");
     for(int i = 0;i<8;i++){
         printf(" [%d][%s] %x\t\t\t\t[%d][%s] %x\t\t\t\t[%d][%s] %x\t\t\t\t[%d][%s] %x\n",i,mnemo[i],binToInt(GBR[i]),i+8,mnemo[i+8],binToInt(GBR[i+8]),i+16,mnemo[i+16],binToInt(GBR[i+16]),i+24,mnemo[i+24],binToInt(GBR[i+24]));
     }
     printf("\n\n [%d][%s] %x\t\t\t\t[%d][%s] %x\t\t\t\t[%d][%s] %x\n",32,mnemo[32],binToInt(GBR[32]),33,mnemo[33],binToInt(GBR[33]),34,mnemo[34],binToInt(GBR[34]));
-    printf("==========================================\n");
+    printf("\n==========================================\n");
 }
 void inc(int registre){
     char value[33];

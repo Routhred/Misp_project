@@ -216,3 +216,29 @@ int negatif = 0;
 		complementADeux(tab,32);
 	}
 }
+
+int testExit(char ligne[100]){
+	int i = 0;
+	char sortie[] = "exit";
+	int result = 0;
+	for (i;i<4;i++){
+		if(ligne[i]!=sortie[i]){
+			result = 1;
+		}
+	}
+	return result;
+}
+void lowerToUpper(char ligne[100]){
+	int i = 0;
+	char temp;
+	for (i;i<100;i++){
+		temp = ligne[i];
+		if(temp>=97){
+			ligne[i] -= 32;
+		}
+	}
+	
+}
+	
+
+
