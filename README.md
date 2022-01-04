@@ -39,4 +39,10 @@ Utilisateur:
 
 En premier vous aurez le nom du mode qui s'affiche, puis la traduction des instructions.
 Ensuite vous aurez les instructions qui s'executerons dans l'ordre, et si vous êtes en mode pas a pas, il faudra appuyer sur la touche <return> entre chaque execution.
+<<<<<<< HEAD
 A la fin de l'execution, vous aurez la liste des registres avec les valeurs qu'ils auront.
+=======
+A la fin de l'execution, vous aurez la liste des registres avec les valeurs qu'ils auront.
+    
+ 
+>>>>>>> d4285067029a3bb939fabc2bfcddef413892f2c1
