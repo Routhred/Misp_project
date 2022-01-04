@@ -160,13 +160,12 @@ void trier_instruction(instruction *in){
 	for(int j = 0;j<i;j++){
 		 	strcpy(in->mots[j],temp.mots[j]);
 		 }
-     in->mots[i++][0]="\0";
+     in->mots[i++][0]='\0';
 }
 //Fonction qui sert a afficher les nb premiers élements d'une instruction passée en parametre
 void afficher_instruction(instruction *in,int nb){
-  int i = 0;
   printf("\nInstruction: ");
-  for (i;i<nb;i++){
+  for (int i = 0;i<nb;i++){
     printf("%s ", in->mots[i]);
   }
   printf("\n");
@@ -184,9 +183,8 @@ void decToBin(char tableau[],int taille){
 
 	}
 	int temp = atoi(tableau);
-	int i = 0;
 	char temp_tab[taille+1];
-	for(i;i<taille;i++){
+	for(int i = 0;i<taille;i++){
 		if(temp>0){
 			temp_tab[i] = (temp%2)+'0';
 			temp/=2;
@@ -194,11 +192,10 @@ void decToBin(char tableau[],int taille){
 			temp_tab[i] = 0 +'0';
 		}
 	}
-	int j = 0; i =0;
-	for (i ,j = taille-1; i<taille;i++,j--){
+	for (int i = 0,j = taille-1; i<taille;i++,j--){
 		tableau[i] = temp_tab[j];
 	}
-	tableau[i] = '\0';
+	tableau[taille-1] = '\0';
 	if (negatif){
 		complementADeux(tableau,taille);
 	}
@@ -232,11 +229,10 @@ void complementADeux(char tableau[],int taille){
 }
 // enleve le premier caractere d'un tableau de taille taille
 void enleverPremierChar(char tableau[],int taille){
-	int i = 0;
-	for(i;i<taille;i++){
+	for(int i = 0;i<taille;i++){
 		tableau[i]=tableau[i+1];
 	}
-	tableau[i]='\0';
+	tableau[taille-1]='\0';
 }
 /*************************************************************************************************************
 *						instruction to table
@@ -283,7 +279,7 @@ void registre_mnemo(char in[],char out[]){
 		int i = 0;
 		while((in[0]!=table_registre[i].mnemo[0])||(in[1]!=table_registre[i].mnemo[1])){
 
-				printf("i = %d, registre:%s, in: %s\n",i,table_registre[i].mnemo,in);
+				//printf("i = %d, registre:%s, in: %s\n",i,table_registre[i].mnemo,in);
 				i++;
 			}
 			strcpy(out,table_registre[i].reg);
