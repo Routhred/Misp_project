@@ -3,6 +3,7 @@
 #include "registre.h"
 #include "utile.h"
 #include "instruction.h"
+
 //arguments: 
 //	argv[0] = nom du programme
 //	argv[1] = nom du premier fichier
@@ -115,7 +116,7 @@ int main(int argc,char * argv[]){
 		//on recupere la ligne
 		printf(">");
 		fgets(ligne,100,stdin);
-		//on test si l'utilisateur a entrï¿½ exit
+		//on test si l'utilisateur a entré exit
 		if(testExit(ligne)){
 			//si non on traduit la ligne
 			traduireLigne(ligne,programme_in);
