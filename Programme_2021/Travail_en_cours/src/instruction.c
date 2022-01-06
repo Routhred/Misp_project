@@ -178,7 +178,6 @@ void divid(int first, int second){
     int valeur2;
     int quotient;
     int reste;
-    char value_dest[33];
     char hexa_q[9];
     char hexa_r[9];
     //lecture du registre de la premiere operande
@@ -257,6 +256,30 @@ void sw(int rs,char offset[17],int base){
 	
 	
 }
+void lui(int registre, char immediate[]){
+    char im[33];
+    char hexa[9];
+
+    upper32bits(im,immediate);
+    ecrireRegistre(registre, im);
+    binToHex(im,hexa);
+    printf("%d\t%s\tX\t\tX\t\t",registre, hexa);
+}
+void lw(int rs,char offset[17],int base){
+	char int_base[33];
+	char adresse[33];
+	char offset_32bits[33];
+	char valeur[33];
+	char hexa[9];
+	int adresse_int;
+	tabTo32bits(offset_32bits,offset);
+	lireRegistre(base,int_base);
+	somme(int_base,offset_32bits,adresse);
+	adresse_int = binToInt(adresse);
+	lireMemoire(valeur,adresse_int);
+	binToHex(valeur,hexa);
+	printf("%d\t%s\tX\t\tX\t\t",rs, hexa);
+}
 void faireInstruction(instruction in){
 
 	switch(in.numero){
@@ -293,6 +316,11 @@ void faireInstruction(instruction in){
 		case 10:
 			jr(binToInt(in.mots[1]));
 			break;
+        case 11:
+            lui(binToInt(in.mots[2]),in.mots[3]);
+            break;
+        case 12:
+            lw(binToInt(in.mots[2]),in.mots[3],binToInt(in.mots[1]));
 		case 16:
 			break;
 		case 17:

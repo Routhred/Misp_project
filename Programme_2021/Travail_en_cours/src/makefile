@@ -17,7 +17,7 @@ all: $(OBJ_FILES)
 	$(CC) $(FLAGS) -o $(BIN) $^
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $^
+	$(CC) $(FLAGS) -lm -c $^
 
 clean:
 	rm -f *.o *~ $(BIN) *.hex *.s *.pdf

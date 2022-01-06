@@ -15,6 +15,7 @@ void divid(int first, int second);
 void jump(char first[32]);
 void jr(int first);
 void sw(int rs,char offset[17],int base);
-
+void lui(int registre, char immediate[]);
+void lw(int rs,char offset[17],int base);
 
 void faireInstruction(instruction in);

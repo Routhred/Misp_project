@@ -8,9 +8,8 @@
 
 
 void afficher_instruction(instruction *in,int nb){
-  int i = 0;
   printf("\nInstruction: ");
-  for (i;i<nb;i++){
+  for (int i = 0;i<nb;i++){
     printf("%s ", in->mots[i]);
   }
   printf("\n");
@@ -24,9 +23,8 @@ void decToBin(char tableau[],int taille){
 
 	}
 	int temp = atoi(tableau);
-	int i = 0;
 	char temp_tab[34];
-	for(i;i<taille;i++){
+	for(int i = 0 ;i<taille;i++){
 		if(temp>0){
 			temp_tab[i] = (temp%2)+'0';
 			temp/=2;
@@ -34,27 +32,25 @@ void decToBin(char tableau[],int taille){
 			temp_tab[i] = 0 +'0';
 		}
 	}
-	int j = 0; i =0;
-	for (i ,j = taille-1; i<taille;i++,j--){
+	for (int i ,j = taille-1; i<taille;i++,j--){
 		tableau[i] = temp_tab[j];
 	}
-	tableau[i] = '\0';
+	tableau[taille] = '\0';
 	if (negatif){
 		complementADeux(tableau,taille);
 	}
 
 }
 void complementADeux(char tableau[],int taille){
-	int i;
 	int carry = 1;
-	for(i = 0;i<taille;i++){
+	for(int i = 0;i<taille;i++){
 		if(tableau[i]=='0'){
 			tableau[i]='1';
 		}else{
 			tableau[i]='0';
 		}
 	}
-	for(i=taille-1;i>0;i--){
+	for(int i = taille-1;i>0;i--){
 		if((tableau[i] == '0')&&(carry == 1)){
 			tableau[i] = '1';
 			carry = 0;
@@ -65,17 +61,15 @@ void complementADeux(char tableau[],int taille){
 	}
 }
 void enleverPremierChar(char tableau[],int taille){
-	int i = 0;
-	for(i;i<taille;i++){
+	for(int i = 0 ;i<taille;i++){
 		tableau[i]=tableau[i+1];
 	}
-	tableau[i]='\0';
+	tableau[taille]='\0';
 }
 void binToHex(char bin[],char hex[]){
-	int i = 0;
 	int value;
 	static char hexa[] = "0123456789abcdef";
-	for(i = 0;i<8;i++){
+	for(int i = 0;i<8;i++){
 		value = 0;
 		value += (bin[(4*i)]-48)*8;
 		value +=  (bin[(4*i)+1]-48)*4;
@@ -127,10 +121,9 @@ void somme(char tab1[],char tab2[],char result[]){
 }
 int binToInt(char tab[]){
 	size_t taille = strlen(tab);
-	int i = taille-1;
 	int puissance = 0;
 	int result = 0;
-	for(i;i>=0;i--){
+	for(int i = taille - 1;i>=0;i--){
 		result = result + ((int)tab[i]-48)*pow(2,puissance);
 		//printf("puissance: %d, result: %d\n",puissance,result);
 		puissance ++;
@@ -139,8 +132,7 @@ int binToInt(char tab[]){
 }
 void tabTo32bits(char tab[],char tab2[]){
 	size_t taille = strlen(tab2);
-	int i = 32;
-	for(i;i>=0;i--){
+	for(int i = 32 ;i>=0;i--){
 		if(i>=taille){
 			tab[i] = tab2[taille-(32-i)];
 		}else{
@@ -197,9 +189,8 @@ int negatif = 0;
 	if(nb<0){
 		negatif = 1;
 	}
-	int i = 0;
 	char temp_tab[34];
-	for(i;i<32;i++){
+	for(int i = 0;i<32;i++){
 		if(nb>0){
 			temp_tab[i] = (nb%2)+'0';
 			nb/=2;
@@ -207,21 +198,19 @@ int negatif = 0;
 			temp_tab[i] = 0 +'0';
 		}
 	}
-	int j = 0; i = 0;
-	for (i ,j = 31; i<32;i++,j--){
+	for (int i = 0 ,j = 31; i<32;i++,j--){
 		tab[i] = temp_tab[j];
 	}
-	tab[i] = '\0';
+	tab[32] = '\0';
 	if (negatif){
 		complementADeux(tab,32);
 	}
 }
 
 int testExit(char ligne[100]){
-	int i = 0;
 	char sortie[] = "exit";
 	int result = 0;
-	for (i;i<4;i++){
+	for (int i = 0;i<4;i++){
 		if(ligne[i]!=sortie[i]){
 			result = 1;
 		}
@@ -229,15 +218,28 @@ int testExit(char ligne[100]){
 	return result;
 }
 void lowerToUpper(char ligne[100]){
-	int i = 0;
 	char temp;
-	for (i;i<100;i++){
+	for (int i = 0;i<100;i++){
 		temp = ligne[i];
 		if(temp>=97){
 			ligne[i] -= 32;
 		}
 	}
 	
+}
+void upper32bits(char in[],char out[]){
+	size_t taille = strlen(in);
+		for(int i = 0;i<32;i++){
+			if(i<taille){
+				out[i] = in[i];
+			}else{
+				out[i] = '0';
+			}
+			out[33] = '\0';
+			
+		}
+		//printf("\ntableau 32 bits: %s,taill:%d\n",tab,taille);
+
 }
 	
 

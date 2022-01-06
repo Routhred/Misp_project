@@ -41,4 +41,5 @@ void bitwiseXor(char dest[],char tab[],char tab2[]);
 void intToBin(int nb,char tab[33]);
 int testExit(char ligne[100]);
 void lowerToUpper(char ligne[100]);
+void upper32bits(char in[],char out[]);
 #endif
