@@ -23,8 +23,7 @@ void lireMemoire(char value[], int adresse){
     strcpy(value,memoire[adresse]);
 }
 void afficherMemoire(int a,int b){
-    int i = a;
-    for(i;i<b;i++){
+    for(int i = a;i<b;i++){
         printf("Adresse: %d,\tvaleur: %s\n",i,memoire[i]);
     }
 

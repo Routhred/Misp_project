@@ -109,14 +109,14 @@ int main(int argc,char * argv[]){
 	    }
 	    //on affiche les registres
 		afficherRegistres();
-	        afficherMemoire(0,50);
+	    afficherMemoire(0,10);
     }else{
 	    //tant qu'on a pas eu exit dans la console
 	    while(!fin){
 		//on recupere la ligne
 		printf(">");
 		fgets(ligne,100,stdin);
-		//on test si l'utilisateur a entré exit
+		//on test si l'utilisateur a entrï¿½ exit
 		if(testExit(ligne)){
 			//si non on traduit la ligne
 			traduireLigne(ligne,programme_in);

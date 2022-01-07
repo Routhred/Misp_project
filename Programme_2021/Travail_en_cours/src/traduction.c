@@ -40,7 +40,6 @@ int traduireFichier(char source[],char dest[],instruction programme [MAX_PRG],ch
 	FILE * fichier_dest;
 	//declaration de variables locales
 	char ligne[100];
-	char temp;
 	instruction in;
 	int pc = 0;
 	//ouverture des fichiers en mode lecture et ecriture (pour ne pas modifier le fichier source)
@@ -200,7 +199,7 @@ void trier_instruction(instruction *in){
 	for(int j = 0;j<i;j++){
 		 	strcpy(in->mots[j],temp.mots[j]);
 		 }
-     in->mots[i++][0]="\0";
+     in->mots[i++][0]='\0';
 }
 void structToTab(instruction *in){
 	int i = 0;
@@ -232,7 +231,4 @@ void registre_mnemo(char in[],char out[]){
 	}else{
 		strcpy(out,in);
 	}
-
-
-
 }

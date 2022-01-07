@@ -178,7 +178,6 @@ void divid(int first, int second){
     int valeur2;
     int quotient;
     int reste;
-    char value_dest[33];
     char hexa_q[9];
     char hexa_r[9];
     //lecture du registre de la premiere operande
