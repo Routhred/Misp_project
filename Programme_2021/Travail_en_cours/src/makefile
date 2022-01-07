@@ -1,25 +1,36 @@
+## Change this variable
+MYNAME=SERPOLLET_TREHIN
+# and perhaps this one
+SRCDOC=Readme.md
+# testfiles are in TESTDIR and IGNORE = list of files to ignore when taring
+TESTDIR = testfiles/
+IGNORE = old_generate.c.old
+## Do not change below please
+BIN = emul-mips
+PREFIX=MIPS3
+CC = gcc
+FLAGS = -Wall -lm
+C_FILES = $(wildcard *.c)
+OBJ_FILES = $(C_FILES:.c=.o)
 
-all : traduction.o main.o registre.o memory.o utile.o instruction.o
-	gcc traduction.o main.o registre.o memory.o utile.o instruction.o -o prog -Wall -lm
+all: $(OBJ_FILES)
+	$(CC)  -o $(BIN) $^ $(FLAGS)
 
-traduction.o : traduction.c traduction.h data.h struct.h utile.h
-	gcc -c traduction.c -o traduction.o -Wall
+%.o: %.c
+	$(CC)  -c $^ $(FLAGS)
 
-registre.o : registre.c registre.h struct.h utile.h
-	gcc -c registre.c -o registre.o -Wall
+clean:
+	rm -f *.o *~ $(BIN) *.hex *.s *.pdf
 
-memory.o : memory.c memory.h struct.h utile.h
-	gcc -c memory.c -o memory.o -Wall
+# a useful command to generate a pdf from a .md documentation file
+doc : $(SRCDOC)
+	pandoc -f markdown -t pdf  $(SRCDOC) -o $(basename $(SRCDOC)).pdf
 
-utile.o : utile.c utile.h struct.h
-	gcc -c utile.c -o utile.o -Wall
 
-instruction.o : instruction.c instruction.h registre.h utile.h memory.h 
-	gcc -c instruction.c -o instruction.o -Wall
-
-main.o : main.c traduction.h data.h memory.h registre.h utile.h instruction.h
-	gcc -c main.c -o main.o -Wall
-
-clean :
-	rm *.o
+# A useful command to deliver your project while keeping me sane
+tar: clean
+	dir=$$(basename $$PWD) && echo "compressing $(dir)" && cd .. && \
+	tar cvfz "$(PREFIX)-$(MYNAME).tgz" \
+	--transform="s,^$$dir,$(PREFIX)-$(MYNAME)," \
+	--exclude="$(IGNORE)" "$$dir" --verbose --show-transformed-names
 
