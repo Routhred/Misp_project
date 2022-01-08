@@ -17,7 +17,7 @@ utile.o : utile.c utile.h struct.h
 instruction.o : instruction.c instruction.h registre.h utile.h memory.h 
 	gcc -c instruction.c -o instruction.o -Wall
 
-main.o : main.c traduction.h data.h memory.h registre.h utile.h instruction.h
+main.o : main.c traduction.h memory.h registre.h utile.h instruction.h
 	gcc -c main.c -o main.o -Wall
 
 clean :

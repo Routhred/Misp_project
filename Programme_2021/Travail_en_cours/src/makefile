@@ -1,9 +1,9 @@
 ## Change this variable
 MYNAME=SERPOLLET_TREHIN
 # and perhaps this one
-SRCDOC=Readme.md
+SRCDOC=Readme_.md
 # testfiles are in TESTDIR and IGNORE = list of files to ignore when taring
-TESTDIR = testfiles/
+TESTDIR = tests
 IGNORE = old_generate.c.old
 ## Do not change below please
 BIN = emul-mips
@@ -24,7 +24,7 @@ clean:
 
 # a useful command to generate a pdf from a .md documentation file
 doc : $(SRCDOC)
-	pandoc -f markdown -t pdf  $(SRCDOC) -o $(basename $(SRCDOC)).pdf
+	pandoc -f markdown  $(SRCDOC) -o $(basename $(SRCDOC)).pdf
 
 
 # A useful command to deliver your project while keeping me sane
