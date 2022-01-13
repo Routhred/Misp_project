@@ -1,5 +1,5 @@
 ADDI $at,$zero,5
-    ADDI $1,$0,5
+   ADDI $1,$0,5
 
 # some comment
 SW $3,10($0)
@@ -9,7 +9,6 @@ LW $4,10($0) # some other comment
 SLL $5,$4,2
 SRL $6,$5,2
 SUB $7,$3,$2
-DIV $5,$2
 ADD $8,$3,$2
 SLT $9,$3,$2
 SLT $10,$2,$3
@@ -25,6 +24,7 @@ MFLO $18
 MFHI $19
 ADDI $20,$2,17
 LUI $20, 16
+DIV $5,$2
 ADDI $21,$0,100
 JR $21
 ADDI $3,$0,0

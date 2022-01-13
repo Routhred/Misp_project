@@ -8,10 +8,12 @@
 //	argv[0] = nom du programme
 //	argv[1] = nom du premier fichier
 //	argv[2] = nom du fichier de destination de la traduction
+//  argv[3] = nom du fichier de destination des registres
 
 //chemins des fichiers source et dest
 char * path_test = "tests/";
 char * path_hex = "hexified/";
+char * path_reg = "registres/";
 //declaration des tableaux contenant le programme
 instruction programme_in[MAX_PRG];
 char code [MAX_PRG][100];
@@ -19,6 +21,7 @@ char code [MAX_PRG][100];
 char temp_pc[100];
 char buffer [100];
 char buffer1 [100];
+char buffer2 [100];
 //variable temporaire
 int pc = 0;
 int id = 0;
@@ -41,7 +44,7 @@ int main(int argc,char * argv[]){
     //si on a que 3 arguments alors on traduit le fichier en entier
     //on met le resultat dans le fichier de destination 
     //on remplit les tableaux programme
-    if (argc == 3){
+    if (argc == 4){
 	    mode = 0;
         //creation des fichiers sources et dest
         char * source = strcat(strcpy(buffer1,path_test),argv[1]);
@@ -50,7 +53,7 @@ int main(int argc,char * argv[]){
         //traduction du fichier source
         memoire_base = traduireFichier(source,dest,programme_in,code);
     //si on a 4 arguments alors on utilise le mode pas a pas
-    }else if((argc == 4)&&!(strcmp("-pas",argv[3]))){
+    }else if((argc == 5)&&!(strcmp("-pas",argv[4]))){
 	//on set le mode pas a pas
         mode = 1;
 	//creation des pointeurs
@@ -67,10 +70,12 @@ int main(int argc,char * argv[]){
     //sinon on indique une erreur
     }else{
         printf("\nEcrivez le chemins du fichier source en lancement du programme ou de bons arguments\n");
+		return 0;
     }
     
     //tant que l'instruction courante est active
     if(mode != 2){
+		
 	    printf("\n===================================\n");
 	    //afficherProgrammeInstruction(programme_in);
 	    printf("colonne 1 : PC\ncolonne 2 : Registre modifié\ncolonne 3 : Nouvelle valeur registre\ncolonne 4 : adresse memoire modifiée\ncolonne 5 : nouvelle valeur memoire\ncolonne 6 : instruction en cours\n");
@@ -109,13 +114,15 @@ int main(int argc,char * argv[]){
 	    }
 	    //on affiche les registres
 		afficherRegistres();
-	    afficherMemoire(0,10);
+		char * fichier_registre = strcat(strcpy(buffer2,path_reg),argv[3]);
+		stockerRegistres(fichier_registre);
+	    afficherMemoire();
     }else{
 	    //tant qu'on a pas eu exit dans la console
 	    while(!fin){
 		//on recupere la ligne
 		printf(">");
-		fgets(ligne,100,stdin);
+		//fgets(ligne,100,stdin);
 		//on test si l'utilisateur a entr� exit
 		if(testExit(ligne)){
 			//si non on traduit la ligne

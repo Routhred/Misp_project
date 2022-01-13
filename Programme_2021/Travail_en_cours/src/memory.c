@@ -20,11 +20,22 @@ void ecrireMemoire(char value[],int adresse){
         //printf("\nLa valeur : %s a ete copiée a l'adresse: %d\n",value, adresse);
 }
 void lireMemoire(char value[], int adresse){
-    strcpy(value,memoire[adresse]);
+	char temp[8];
+	
+	for(int i = 0;i<4;i++){
+		strcpy(temp,memoire[adresse+i]);
+		for(int j = 0;j<8;j++){
+			value[j+8*i] = temp[j];
+			printf(" value[%d] = %c\n",j+8*i,value[j+8*i]);
+		}
+	}
+	value[32] = '\0';
 }
 void afficherMemoire(int a,int b){
-    for(int i = a;i<b;i++){
-        printf("Adresse: %d,\tvaleur: %s\n",i,memoire[i]);
-    }
+    for(int i = a;i<5000;i++){
+        if((memoire[i][0]=='0')||(memoire[i][0]=='1')){
+		printf("Adresse: %d,\tvaleur: %s\n",i,memoire[i]);
+	}
+}
 
 }

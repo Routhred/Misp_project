@@ -34,11 +34,13 @@ void somme(char tab1[],char tab2[],char result[]);
 //traduire un tableau de bits en decimal
 int binToInt(char tab[]);
 //transforme un tableau en un tableau de 32 bits en rajoutant des 0 devant
-void tabTo32bits(char tab[],char tab2[]);
+void tabTo32bits(char tab[],char tab2[],int mode);
 void bitwiseAnd(char dest[],char tab[],char tab2[]);
 void bitwiseOr(char dest[],char tab[],char tab2[]);
 void bitwiseXor(char dest[],char tab[],char tab2[]);
-void intToBin(int nb,char tab[33]);
-int testExit(char ligne[100]);
-void lowerToUpper(char ligne[100]);
+void intToBin(int nb,char tab[]);
+int testExit(char ligne[]);
+void lowerToUpper(char ligne[]);
+void rotate(int mode ,int nbits,char source[]);
+
 #endif

@@ -50,3 +50,22 @@ void inc(int registre){
     somme(un,value,value);
     ecrireRegistre(registre,value);
 }
+void stockerRegistres(char dest[]){
+    FILE * fichier_registre;
+    fichier_registre = fopen(dest,"w");
+    char buffer[20];
+    char hexa[9];
+    char value[3];
+    for(int i = 0;i<35;i++){
+        binToHex(GBR[i],hexa);
+        value[0] = (i/10)+48;
+        value[1] = (i%10)+48;
+        strcat(strcpy(buffer,"$"),value);
+        strcat(buffer," :");
+        strcat(buffer,hexa);
+
+        fputs(buffer,fichier_registre);
+        fputs("\n",fichier_registre);
+    }
+    fclose(fichier_registre);
+}

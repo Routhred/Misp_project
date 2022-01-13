@@ -15,6 +15,7 @@ void afficherRegistres();
 void inc(int registre);
 //lit ce qu'il y a dans un registre
 void lireRegistre(int registre, char value[]);
+void stockerRegistres(char dest[]);
 
 
 

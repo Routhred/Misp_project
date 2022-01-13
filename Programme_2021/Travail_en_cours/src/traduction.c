@@ -81,6 +81,7 @@ int traduireFichier(char source[],char dest[],instruction programme [MAX_PRG],ch
 			fputs(in.hexa,fichier_dest);
 			fputs("\n",fichier_dest);
 			printf("\n%d	%s	%s",pc,in.hexa,code[pc]);
+			//afficher_instruction(&in,4);
 			ecrireMemoire(in.binaire,4*pc);
 			pc ++;
 				//printf("Binaire : %s\n",in.binaire);

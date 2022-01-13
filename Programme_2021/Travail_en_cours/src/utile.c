@@ -131,22 +131,36 @@ int binToInt(char tab[]){
 	}
 	return result;
 }
-void tabTo32bits(char tab[],char tab2[]){
+void tabTo32bits(char tab[],char tab2[], int mode){
 	size_t taille = strlen(tab2);
-	for(int i = 32;i>=0;i--){
-		if(i>=taille){
-			tab[i] = tab2[taille-(32-i)];
-		}else{
-			if(tab2[0] == '1'){
-				tab[i] = '1';
+	if(mode == 1){
+		for(int i = 32;i>=0;i--){
+			if(i>=taille){
+				tab[i] = tab2[taille-(32-i)];
 			}else{
-				tab[i] = '0';
+				if(tab2[0] == '1'){
+					tab[i] = '1';
+				}else{
+					tab[i] = '0';
+				}
 			}
+			tab[33] = '\0';
+			
+		}
+	}else{
+		for(int i = 0;i<32;i++){
+			if(i<taille){
+				tab[i] = tab2[i];
+			}else{
+					tab[i] = '0';
+			
+			
+			}
+			//printf("tableau [%d] = %c\n",i,tab[i]);
 		}
 		tab[33] = '\0';
-		
-	}
 	//printf("\ntableau 32 bits: %s,taill:%d\n",tab,taille);
+	}
 }
 void bitwiseAnd(char dest[],char tab[],char tab2[]){
 	size_t taille = strlen(tab);
@@ -184,7 +198,7 @@ void bitwiseXor(char dest[],char tab[],char tab2[]){
 	dest[taille] = '\0';
 	
 }
-void intToBin(int nb,char tab[33]){
+void intToBin(int nb,char tab[]){
 int negatif = 0;
 
 	if(nb<0){
@@ -207,8 +221,7 @@ int negatif = 0;
 		complementADeux(tab,32);
 	}
 }
-
-int testExit(char ligne[100]){
+int testExit(char ligne[]){
 
 	char sortie[] = "exit";
 	int result = 0;
@@ -219,7 +232,7 @@ int testExit(char ligne[100]){
 	}
 	return result;
 }
-void lowerToUpper(char ligne[100]){
+void lowerToUpper(char ligne[]){
 	char temp;
 	for (int i = 0;i<100;i++){
 		temp = ligne[i];
@@ -228,6 +241,51 @@ void lowerToUpper(char ligne[100]){
 		}
 	}
 	
+}
+void rotate(int mode ,int nbits,char tab[]){
+	size_t taille = strlen(tab);
+	char temp;
+	int neg;
+	printf("\ntableau avant: (%s)\n",tab);
+	if (mode == 1){
+		for(int j = 0;j<nbits;j++){
+			temp = tab[31];
+			for(int i = taille-1;i>0;i--){
+				tab[i] = tab[i-1];
+			}
+			tab[0] = temp;
+		}
+
+	}else if(mode == 2){
+		for(int j = 0;j<nbits;j++){
+			for(int i = 0;i<taille-1;i++){
+				tab[i] = tab[i+1];
+			}
+			tab[0] = '0';
+		}
+
+	}else if(mode == 3){
+		if(tab[0] == '1'){
+			neg = 1;
+		}
+		for(int j = 0;j<nbits;j++){
+			for(int i = taille-1;i>0;i--){
+				tab[i] = tab[i-1];
+			}
+			if(neg){
+				tab[31] = '1';
+			}else{
+				tab[31] = '0';
+			}
+		}
+
+	}
+
+	printf("\ntableau apres: (%s)\n",tab);
+
+
+
+
 }
 	
 
