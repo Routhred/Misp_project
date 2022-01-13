@@ -114,7 +114,7 @@ int split(char ligne[], instruction *in){
 		result = 1;
 		i = 0;
 		//sauvegarde du token dans notre instruction
-		while(flag != NULL){
+		while(flag){
 			flag = strtoken[i];
 			in->mots[compteur][i] = flag;
 			i++;

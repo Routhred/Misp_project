@@ -15,6 +15,7 @@ void afficherRegistres();
 void inc(int registre);
 //lit ce qu'il y a dans un registre
 void lireRegistre(int registre, char value[]);
+//stocke les registres dans le fichier de destination dans le dossier "registre/"
 void stockerRegistres(char dest[]);
 
 
