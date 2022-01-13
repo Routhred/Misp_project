@@ -1,42 +1,40 @@
----
-title: CS351@ Esisar -- MIPS Emulator Developer Documentation
-subtitle: Step 2, 2021-2022 
-author: Romain SERPOLLET - Loan TREHIN
-papersize: a4
-geometry: margin=1.5cm
-fontsize: 12pt
----
 
-<center>CS351@ Esisar -- MIPS Emulator Developer Documentation</center>
+CS351@ Esisar -- MIPS Emulator Developer Documentation
 ==
-<center>Romain SERPOLLET - Loan TREHIN</center>
+Romain SERPOLLET - Loan TREHIN
 --
 ___
 
-<center>Sommaire </center>
+Sommaire
 ==
-- [[#Les modes de fonctionnement]]
-	- [[#1 Lecture de fichier]]
-		- [[#1 1 Traduction du fichier]]
-			- [[#1 1 1 Découpage de notre ligne]]
-			- [[#1 1 2 Traduction]]
-			- [[#1 1 3 Stockage]]
-		- [[#1 2 Exécution du programme]]
-			- [[#1 2 1 Gestion du Programme Compteur]]
-			- [[#1 2 2 Exécution de l'instruction courante]]
-			- [[#1 2 3 Affichage]]
-	- [[#2 Lecture du fichier en mode pas à pas]]
-		- [[#2 1 La traduction]]
-		- [[#2 2 Exécution]]
-		- [[#2 3 Affichage]]
-	- [[#3 Mode console]]
-		- [[#3 1 Traduction]]
-		- [[#3 2 Exécution]]
-		- [[#3 3 Affichage]]
+- Les modes de fonctionnement
+	- 1 Lecture de fichier
+		- 1 1 Traduction du fichier
+			- 1 1 1 Découpage de notre ligne
+			- 1 1 2 Traduction
+			- 1 1 3 StockagE
+		- 1 2 Exécution du programme
+			- 1 2 1 Gestion du Programme Compteur
+			- 1 2 2 Exécution de l'instruction courante
+			- 1 2 3 Affichage
+	- 2 Lecture du fichier en mode pas à pas
+		- 2 1 La traduction
+		- 2 2 Exécution
+		- 2 3 Affichage
+	- 3 Mode console
+		- 3 1 Traduction
+		- 3 2 Exécution
+		- 3 3 Affichage
+- Les modules
+	- traduction c h
+	- utile c h
+	- memory c h
+	- registre c h
+	- instruction c h
 
 
 ___
-<center> Structure du code </center>
+ Structure du code
 ==
 
 *traduction.[c|h] : Module utilise pour traduire les instructions en hexadecimal
@@ -181,6 +179,8 @@ Ce module utilise les header _struct.h_ et _data.h_ qui définissent respectivem
 Il utilise aussi le module _memory_ pour pouvoir écrire les instructions qu'il traduit dans la mémoire.
 Ce module constitue toute la première partie du projet.
 
+Lors de la traduction, on utilise un système de complément à deux pour encoder les nombre négatifs, ainsi, on ne peut coder que des nombres allant de $-(2^{32}-1)$ à $(2^{32}-1)$.
+
 ## utile.[c|h]
 
 Nous avons créé un module utile pour y définir toutes les fonctions qui peuvent nous servir dans les autres modules, comme les fonctions de conversion binaire en décimal par exemple.
@@ -188,14 +188,27 @@ On y défini aussi les fonctions qui servent à l'éxecution des instructions, c
 Nous avons fait ce module pour éviter d'avoir à redéfinir des fonctions similaires dans chaque module.
 
 ## memory.[c|h]
-Le module memory est le seul qui peut accéder à la mémoire puisqu'elle y est défini. 
+Le module memory est le seul qui peut accéder à la mémoire puisqu'elle y est défini, nous avons fait ca pour des raisonde sécurité, pour éviter que d'autres modules viennent écrire des valeurs non correcte dans la mémoire, par ailleurs, il y a une fonction qui vérifie l'intégritée des données écrite dans la mémoire. Avant d'écrire dans la mémoire, le module vérifie que ce que nous voulons écrire est bien des bits et non d'autres caractères. 
 On a choisi de créer une mémoire comme un tableau de char de 5000 lignes et 9 colonnes, car nos bits sont des chars. La vrai mémoire d'un processeur MIPS est composée de blocs de 8 bits donc chaque ligne fait 9 pour pouvoir mettre '\0' à la fin.
 
 Comme les instructions et les valeurs font 32 bits, notre fonction ecrireMemoire() va écrire sur 4 adresse mémoires consécutives en partant de l'adresse la plus petite. 
 
 Ce module permet aussi de nous afficher la mémoire de l'adresse a à l'adresse b.
 
-##
+## registre.[c|h]
+
+Ce module est celui où sont défini les registres, il est le seul à pouvoir y accéder.
+Nous avons utilisé un tableau de char de 35 lignes de 33 caractères chacune afin de pouvoir y placer des valeurs de 32 bits. 
+Il y a 32 registres normaux + 3 registres spéciaux : PC, LO, HI
+De plus, les registres PC et x0 sont initialisés à 0 au lancement du programme.
+Nous avons aussi créer un système de protection des registres, en effet, x0 doit toujours être à 0, il est donc impoosible au programme d'écrire dedans. Il en est de même pour les registres 26, 27 et 30 puisque dans la documentation il nous est écrit que ces registres sont réservés.
+
+
+## instruction.[c|h]
+
+Ce module est celui qui nous permet d'exécuter les instructions. Il possède une fonction principale, executerInstruction(), qui prend en paramètre un type instruction. Cette fonction est appelée depuis le main pour exécuter l'instruction courante.
+On se sert du numéro contenu dans l'instruction pour appeler la fonction qui pourra l'exécuter, pour cela, on utilise un simple switch. Et dans le cas où le numéro correspond, on appelle la fonction correspondante en lui passant en paramètre les opérandes de l'instruction.
+Les fonctions, lisent les valeurs contenues dans les registres, effectuent les opérations dessus et écrivent les valeurs de sortie dans les registres de destination.
 
 
  
