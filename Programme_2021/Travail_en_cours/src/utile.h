@@ -23,7 +23,6 @@ void decToBin(char tableau[],int taille);
 **************************************************************************************************************/
 void complementADeux(char tableau[],int taille);
 // enleve le premier caractere d'un tableau de taille taille
-
 void enleverPremierChar(char tableau[],int taille);
 //Traduit le tableau bin de 32 bits en hexadécimal et le met dans le tableau hex
 void binToHex(char bin[],char hex[]);

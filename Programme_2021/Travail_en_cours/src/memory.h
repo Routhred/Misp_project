@@ -7,7 +7,7 @@
 void ecrireMemoire(char value[],int adresse);
 //fonction pour lire dans la mémoire, on vient lire 32bits sur 4 adresses
 void lireMemoire(char value[], int adresse);
-//fonction qui affiche toute la mémoire utilisée
+//fonction qui affiche toute la memoire utilisee
 void afficherMemoire();
 
 

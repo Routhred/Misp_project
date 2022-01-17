@@ -95,7 +95,6 @@ int main(int argc,char * argv[]){
 		    inc(32);
 		    inc(32);
 		    inc(32);
-		    //printf("PC = %d = %s\t",pc,temp_pc);
 		    //on effectue l'instruction courante
 		    faireInstruction(programme_in[id]);
 		    printf("%s",code[id]);
@@ -122,7 +121,7 @@ int main(int argc,char * argv[]){
 	    while(!fin){
 		//on recupere la ligne
 		printf(">");
-		//fgets(ligne,100,stdin);
+		fgets(ligne,100,stdin);
 		//on test si l'utilisateur a entr� exit
 		if(testExit(ligne)){
 			//si non on traduit la ligne

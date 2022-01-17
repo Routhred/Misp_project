@@ -1,10 +1,11 @@
 #include "traduction.h"
 #include "data.h"
 #include "memory.h"
-//definition des constantes
+//definition des delimiteurs
 const char * delimiter = " ,$()\n\r\t";
 void traduireLigne(char ligne[100],instruction programme[MAX_PRG]){
 	char temp[100];
+	//sauvegarde de la ligne
 	strcpy(temp,ligne);
 	instruction in;
 	if(split(ligne,&in)){
@@ -21,7 +22,6 @@ void traduireLigne(char ligne[100],instruction programme[MAX_PRG]){
 			//on traduit le tableau en binaire
 			binToHex(in.binaire,in.hexa);
 			programme[0] = in;
-			//printf("binaire = %s,hexa = %s",in.binaire,in.hexa);
 			//on copie l'instruction dans le tableau programme instruction
 			//on ecrit le tableau en hexa dans le fichier dest
 			printf("\n %s	%s",in.hexa,ligne);
@@ -62,8 +62,6 @@ int traduireFichier(char source[],char dest[],instruction programme [MAX_PRG],ch
 			//on specifie que l'instruction est active
 			in.actif = 1;
 			lowerToUpper(in.mots[0]);
-			//printf("ligne:%s\n",ligne);
-			//printf("\n===================================\n");
 			//On recupere le numero de ligne correspondant au code de l'instruction dans les tables de correspondance
 			in.numero = findInstruction(&in);
 			//on met les operandes de l'instruction dans le bon ordre
@@ -84,7 +82,6 @@ int traduireFichier(char source[],char dest[],instruction programme [MAX_PRG],ch
 			//afficher_instruction(&in,4);
 			ecrireMemoire(in.binaire,4*pc);
 			pc ++;
-				//printf("Binaire : %s\n",in.binaire);
 		}
 		
 		
@@ -130,62 +127,92 @@ int split(char ligne[], instruction *in){
 	return result;
 }
 int findInstruction(instruction *in){
+	//initialisation du compteur
 	int compteur = 0;
+	//boucle pour chercher l'instruction dans la table de correspondance
 	while(strcmp((in->mots[0]),(table_type[compteur].nom))){
 		compteur++;
 	}
 	return compteur;
 }
 void trier_instruction(instruction *in){
+	//creation des variables
 	char ordre[11];
 	char zero[6] = {'0','0','0','0','0','\0'};
 	char special[7] = {'0','0','0','0','0','0','\0'};
 	char r[6] = {'0','0','0','0','1','\0'};
 	int i = 0;
 	int numero = in->numero;
+	//on lit la ligne correspondant a notre instruction dans la table table_structure
+	//ordre contient la liste et l'ordre des operandes d'une instruction
+	//contient :
+	/*
+	S : Special : 000000
+	Z : Zero : 00000
+	N : Nom : .code
+	F : Fin
+	I : immediate: 16b
+	J : jump : 26b
+	O : ofset : 16b
+	R : 00001
+												*/
 	strcpy(ordre,table_structure[numero].emplacement_operandes);
 
 	instruction temp;
+	//tant qu'on a pas atteint la fin de l'ordre
 	while(ordre[i]!='F'){
+		//on fait certaines action en fonction de ce que contient le tableau ordre
 		switch(ordre[i]){
 			case 'N':
+				//ecrit le nom de l'instruction en binaire
 				strcpy(temp.mots[i],table_structure[numero].code);
 				break;
 			case 'Z':
+				//ecrit 00000
 				strcpy(temp.mots[i],zero);
 				break;
 			case 'R':
+				//ecrit 00001
 				strcpy(temp.mots[i],r);
 				break;
 			case 'S':
+				//ecrit 000000
 				strcpy(temp.mots[i],special);
 				break;
 			case 'J':
+				//ecrit la premiere operande d'une instruction jump
 				strcpy(temp.mots[i],in->mots[1]);
 				decToBin(temp.mots[i],26);
 				break;
 			case 'I':
+				//ecrit la derniere operande d'une instruction immediate
 				strcpy(temp.mots[i],in->mots[table_type[numero].operandes]);
 				decToBin(temp.mots[i],16);
 				break;
 			case 'O':
+				//ecrit la deuxieme operande d'une instruction a offset
 				strcpy(temp.mots[i],in->mots[2]);
 				decToBin(temp.mots[i],16);
 				break;
 			case 'H':
+				//ecrit 00000
 				strcpy(temp.mots[i],zero);
 				break;
 			case '0':
+				//ecrit la premiere operande
 				strcpy(temp.mots[i],in->mots[1]);
 				registre_mnemo(temp.mots[i],temp.mots[i]);
 				decToBin(temp.mots[i],5);
 				break;
 			case '1':
+				//ecrit la deuxieme operande
+
 				strcpy(temp.mots[i],in->mots[2]);
 				registre_mnemo(temp.mots[i],temp.mots[i]);
 				decToBin(temp.mots[i],5);
 				break;
 			case '2':
+				//ecrit la troisieme operande
 				strcpy(temp.mots[i],in->mots[3]);
 				registre_mnemo(temp.mots[i],temp.mots[i]);
 				decToBin(temp.mots[i],5);
@@ -197,16 +224,18 @@ void trier_instruction(instruction *in){
 		i++;
 
 	}
+	//boucle pour remplir l'instruction d'entree avec l'instruction temporaire
 	for(int j = 0;j<i;j++){
 		 	strcpy(in->mots[j],temp.mots[j]);
 		 }
      in->mots[i++][0]='\0';
 }
+
 void structToTab(instruction *in){
 	int i = 0;
 	int j = 0;
 	int k = 0;
-
+	//triple boucle pour remplir un tableau avec les mots de l'instruction
 	while(k<32){
 		while(in->mots[i][j]!='\0'){
 			in->binaire[k] = in->mots[i][j];
@@ -221,13 +250,16 @@ void structToTab(instruction *in){
 	in->binaire[32] = '\0';
 }
 void registre_mnemo(char in[],char out[]){
+	//si le premier caractere est une lettre alors
 	if((in[0]>96)&&(in[0]<123)){
 		int i = 0;
+		//on va chercher sa correspondance en chiffre
 		while((in[0]!=table_registre[i].mnemo[0])||(in[1]!=table_registre[i].mnemo[1])){
 
 				//printf("i = %d, registre:%s, in: %s\n",i,table_registre[i].mnemo,in);
 				i++;
 			}
+			//on copie le chiffre du registre dans la sortie
 			strcpy(out,table_registre[i].reg);
 	}else{
 		strcpy(out,in);

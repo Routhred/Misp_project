@@ -1,7 +1,7 @@
 ## Change this variable
 MYNAME=SERPOLLET_TREHIN
 # and perhaps this one
-SRCDOC=Readme_.md
+SRCDOC=Readme.md
 # testfiles are in TESTDIR and IGNORE = list of files to ignore when taring
 TESTDIR = tests
 IGNORE = old_generate.c.old

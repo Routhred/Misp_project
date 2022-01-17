@@ -10,6 +10,7 @@
 void afficher_instruction(instruction *in,int nb){
 
   printf("\nInstruction: ");
+	//boucle pour afficher le nombre nb de mots d'une instruction
   for (int i = 0;i<nb;i++){
     printf("%s ", in->mots[i]);
   }
@@ -17,14 +18,19 @@ void afficher_instruction(instruction *in,int nb){
 }
 void decToBin(char tableau[],int taille){
 	int negatif = 0;
-
+	//si on a un chiffre negatif 
 	if(tableau[0]=='-'){
+		//on met le tag negatif a 1 
 		negatif = 1;
+		//on enleve le - du tableau de char
 		enleverPremierChar(tableau,taille);
 
 	}
+	//on stocke la valeur du tableau en decimal
 	int temp = atoi(tableau);
 	char temp_tab[34];
+	//on traduit le tableau en binaire
+	//notre nouveau tableau est en binaire mais retourne
 	for(int i = 0;i<taille;i++){
 		if(temp>0){
 			temp_tab[i] = (temp%2)+'0';
@@ -33,10 +39,12 @@ void decToBin(char tableau[],int taille){
 			temp_tab[i] = 0 +'0';
 		}
 	}
+	//on remet notre tableau dans le bon sens
 	for (int i = 0 ,j = taille-1; i<taille;i++,j--){
 		tableau[i] = temp_tab[j];
 	}
 	tableau[taille] = '\0';
+	//si le tag negatid etait a 1 alors on fait le complement a 2
 	if (negatif){
 		complementADeux(tableau,taille);
 	}
@@ -44,6 +52,7 @@ void decToBin(char tableau[],int taille){
 }
 void complementADeux(char tableau[],int taille){
 	int carry = 1;
+	//boucle pour mettre tous les 0 a 1 et inversement
 	for(int i = 0;i<taille;i++){
 		if(tableau[i]=='0'){
 			tableau[i]='1';
@@ -51,10 +60,13 @@ void complementADeux(char tableau[],int taille){
 			tableau[i]='0';
 		}
 	}
+	//boucle pour faire + 1
 	for(int i = taille-1;i>0;i--){
+		//si la valeur vaut 0 et la carry 1 alors le tableau vaut 1 et la carry 0
 		if((tableau[i] == '0')&&(carry == 1)){
 			tableau[i] = '1';
 			carry = 0;
+		//sinon, si le tableau vaut 1 et la carry vaut 1, le tableau vaut 0 et la carry 1
 		}else if((tableau[i] == '1')&&(carry == 1)){
 			tableau[i] = '0';
 			carry = 1;
@@ -62,6 +74,7 @@ void complementADeux(char tableau[],int taille){
 	}
 }
 void enleverPremierChar(char tableau[],int taille){
+	//decale le tableau vers la gauche
 	for(int i = 0;i<taille;i++){
 		tableau[i]=tableau[i+1];
 	}
