@@ -34,7 +34,7 @@ L'affichage :
 	- Affichage de la traduction:
 		Lors de la phase de traduction, on aura un tableau de 3 colonnes pour chaque instruction traduite:
 		___________________________________________________________________
-		|					 |                    |                       |
+		|--------------------|--------------------|-----------------------|
 		| numero de la ligne | traduction en hexa | instruction en lettre |
 		|--------------------|--------------------|-----------------------|
 		|____________________|____________________|_______________________|
@@ -42,7 +42,7 @@ L'affichage :
 	- Affichage de l'execution:
 		Lors de la phase de traduction, on aura un tableau de 6 colonnes pour chaque instruction executee:
 		_________________________________________________________________________________________________________________________________________________
-		|					 |                    |                         |					      |                         |                       |
+		|--------------------|--------------------|-------------------------|-------------------------|-------------------------|-----------------------|
 		|		PC			 | N° registre modifie| Valeur registre modifie |adresse memoire modifiee | valeur memoire modifiee | instruction			|
 		|--------------------|--------------------|-------------------------|-------------------------|-------------------------|-----------------------|
 		|   Valeur en hexa   | X si rien          | X si rien               | X si rien               | X si rien               |                       |
