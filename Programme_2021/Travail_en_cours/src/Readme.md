@@ -34,20 +34,18 @@ Lors de l'execution de notre programme il va y avoir 3 phases
 - Affichage de la traduction:
 	Lors de la phase de traduction, on aura un tableau de 3 colonnes pour chaque instruction traduite:
 ___________________________________________________________________
-|--------------------|--------------------|-----------------------|
 | numero de la ligne | traduction en hexa | instruction en lettre |
 |--------------------|--------------------|-----------------------|
 |____________________|____________________|_______________________|
 - Affichage de l'execution:
 	Lors de la phase de traduction, on aura un tableau de 6 colonnes pour chaque instruction executee:
 _________________________________________________________________________________________________________________________________________________
-|--------------------|--------------------|-------------------------|-------------------------|-------------------------|-----------------------|
 |		PC			 | N° registre modifie| Valeur registre modifie |adresse memoire modifiee | valeur memoire modifiee | instruction			|
 |--------------------|--------------------|-------------------------|-------------------------|-------------------------|-----------------------|
 |   Valeur en hexa   | X si rien          | X si rien               | X si rien               | X si rien               |                       |
 |____________________|____________________|_________________________|_________________________|_________________________|_______________________|
-	Lors de cette phase, si les registres sont proteges en ecriture, comme le registre 0, une erreur s'affichera 
-	mais le programme continuera son execution de maniere normale.
+Lors de cette phase, si les registres sont proteges en ecriture, comme le registre 0, une erreur s'affichera 
+mais le programme continuera son execution de maniere normale.
 - Fin de l'execution:
 	A la fin de l'execution, on affiche les registres sous leur forme chiffree et sous leur forme mnemonique suivie 
 	de la valeur qu'ils auront a la fin du programme.
