@@ -1,5 +1,5 @@
 ## Change this variable
-MYNAME=SERPOLLET_TREHIN
+MYNAME=Romain_SERPOLLET_Loan_TREHIN
 # and perhaps this one
 SRCDOC=Readme.md
 # testfiles are in TESTDIR and IGNORE = list of files to ignore when taring
