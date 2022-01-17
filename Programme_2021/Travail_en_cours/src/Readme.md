@@ -33,7 +33,7 @@ utilisateur:
 Lors de l'execution de notre programme il va y avoir 3 phases
 - Affichage de la traduction:
 	Lors de la phase de traduction, on aura un tableau de 3 colonnes pour chaque instruction traduite:
-___________________________________________________________________
+___________________________________________________________________ 
 | numero de la ligne | traduction en hexa | instruction en lettre |
 |--------------------|--------------------|-----------------------|
 |____________________|____________________|_______________________|
