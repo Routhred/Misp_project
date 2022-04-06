@@ -75,3 +75,6 @@ ________________________________________________________________________________
 |_______________________________________________________________________________|________________|__________________|
 
 Lien vers le github : https://github.com/Routhred/Misp_project.git 
+
+/!\ le projet ne fonctionne pas correctement
+probleme de segmentation fault ou boucle infini
